@@ -10,7 +10,19 @@ const port = process.env.PORT || 3000;
 const Book = require('./models/bookModel.js');
 const bookRouter = express.Router();
 bookRouter.route('/books').get((req, res) => {
-  Book.find((err, books) => {
+  const { query } = req;
+  Book.find(query, (err, books) => {
+    if(err){
+      return res.send(err);
+    }else{
+      return res.json(books);
+    }  
+  }); 
+}); 
+
+bookRouter.route('/books/:bookId').get((req, res) => {
+  const { query } = req;
+  Book.findById(req.params.bookId, (err, books) => {
     if(err){
       return res.send(err);
     }else{
