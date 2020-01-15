@@ -30,7 +30,8 @@
     "eslint-plugin-import": "^2.19.1",
     "mocha": "^7.0.0",
     "should": "^13.2.3",
-    "sinon": "^8.0.4"
+    "sinon": "^8.0.4",
+    "supertest": "^4.0.2"
   },
   "nodemonConfig": {
     "restartable": "rs",
