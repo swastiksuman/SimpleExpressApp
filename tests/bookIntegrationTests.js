@@ -18,7 +18,7 @@ describe('Book Crud Test', ()=>{
             .expect(200)
             .end((err, results) => {
                 console.log(results);
-                //results.body.read.should.not.equal('false');
+                results.body.should.not.equal('false');
                 results.body.should.have.property('_id');
                 done();
             });
