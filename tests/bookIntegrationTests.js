@@ -18,7 +18,7 @@ describe('Book Crud Test', ()=>{
             .expect(200)
             .end((err, results) => {
                 console.log(results);
-                results.body.should.not.equal('false');
+                //results.body.should.not.equal('false');
                 results.body.should.have.property('_id');
                 done();
             });
@@ -26,6 +26,6 @@ describe('Book Crud Test', ()=>{
 
     afterEach((done) => {
         Book.deleteMany({}).exec();
-        done();
+        app.server.close(done());
     })
 });
