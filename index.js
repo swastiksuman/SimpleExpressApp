@@ -2,13 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
+const winston = require('winston');
+const consoleTransport = new winston.transports.Console()
+const myWinstonOptions = {
+    transports: [consoleTransport]
+}
+const logger = new winston.createLogger(myWinstonOptions)
+
+
 if(process.env.ENV === 'Test'){
   const db = mongoose.connect('mongodb://swastik:elnino@cluster0-shard-00-00-ufg82.mongodb.net:27017,cluster0-shard-00-01-ufg82.mongodb.net:27017,cluster0-shard-00-02-ufg82.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true }, 
-  (err, db) => {console.log(err)}
+  (err, db) => {logger.error(err)}
 );
 }else{
   const db = mongoose.connect('mongodb://swastik:elnino@cluster0-shard-00-00-ufg82.mongodb.net:27017,cluster0-shard-00-01-ufg82.mongodb.net:27017,cluster0-shard-00-02-ufg82.mongodb.net:27017/prod?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true }, 
-  (err, db) => {console.log(err)}
+  (err, db) => {logger.error(err)}
 );
 }
 
@@ -25,7 +33,7 @@ app.get('/', (req, res) => {
 });
 
 app.server = app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  logger.info(`Listening on port ${port}`);
 });
 
 module.exports = app;
